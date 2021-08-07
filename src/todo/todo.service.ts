@@ -18,8 +18,8 @@ export class TodoService {
     return this.todoModel.find().exec();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} todo`;
+  async findOne(id: string): Promise<Todo> {
+    return this.todoModel.findOne({ _id: id }).exec();
   }
 
   update(id: number, updateTodoDto: UpdateTodoDto) {

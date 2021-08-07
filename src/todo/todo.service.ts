@@ -22,8 +22,12 @@ export class TodoService {
     return this.todoModel.findOne({ _id: id }).exec();
   }
 
-  update(id: number, updateTodoDto: UpdateTodoDto) {
-    return `This action updates a #${id} todo`;
+  async update(id: string, updateTodoDto: UpdateTodoDto): Promise<Todo> {
+    const result = await this.todoModel
+      .findOneAndUpdate({ _id: id }, { ...updateTodoDto })
+      .exec();
+
+    return result;
   }
 
   remove(id: number) {

@@ -5,17 +5,17 @@ import { Todo, TodoDocument } from './entities/todo.entity';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 
-
 @Injectable()
 export class TodoService {
   constructor(@InjectModel(Todo.name) private todoModel: Model<TodoDocument>) {}
 
-  create(createTodoDto: CreateTodoDto) {
-    return 'This action adds a new todo';
+  async create(createTodoDto: CreateTodoDto): Promise<Todo> {
+    const createTodo = new this.todoModel(createTodoDto);
+    return createTodo.save();
   }
 
-  findAll() {
-    return `This action returns all todo`;
+  async findAll(): Promise<Todo[]> {
+    return this.todoModel.find().exec();
   }
 
   findOne(id: number) {
